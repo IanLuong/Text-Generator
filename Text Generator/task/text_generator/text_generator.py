@@ -1,20 +1,30 @@
-corpus = open(input(), "r", encoding="utf-8")
-all_tokens = corpus.read().split()  # TODO fix the RegExp to add tokens with punctuation
-unique_tokens = set(all_tokens)
+corpus = open(input("Input the path to the txt file"), "r", encoding="utf-8")
+all_tokens = corpus.read().split()
+# unique_tokens = set(all_tokens)
 
-print("Corpus statistics:\n"
-      "All tokens:", len(all_tokens), "\n"
-                                      "Unique tokens:", len(unique_tokens))
+bigrams = [[all_tokens[j] for j in range(i, i + 2)] for i in range(len(all_tokens) - 1)]
+# for i in range(len(all_tokens)-1):
+#    to_be_appended = []
+#    for j in range(i, i+2):
+#        to_be_appended.append(all_tokens[j])
+#    bigrams.append(to_be_appended)
+
+
+# print("Corpus statistics:\n"
+#      "All tokens:", len(all_tokens), "\n"
+#                                      "Unique tokens:", len(unique_tokens))
+
+print("Number of bigrams:", len(bigrams))
+
 running = True
 while running:
     user_input = input()
     if user_input == "exit":
         running = False
-        break
-    elif user_input.isalpha():
-        print("Type Error")
     else:
-        if int(user_input) >= len(all_tokens):
-            print("Index Error")
-        else:
-            print(all_tokens[int(user_input)])
+        try:
+            print(f"Head: {bigrams[int(user_input)][0]}\tTail: {bigrams[int(user_input)][1]}")
+        except ValueError:
+            print("Type Error. Please input an integer.")
+        except IndexError:
+            print("Index Error. Please input an integer that is in the range of the corpus.")
